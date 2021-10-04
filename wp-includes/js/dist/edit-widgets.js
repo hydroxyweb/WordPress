@@ -1133,8 +1133,10 @@ const getWidgetAreaForWidgetId = Object(external_wp_data_["createRegistrySelecto
   const widgetAreas = select(STORE_NAME).getWidgetAreas();
   return widgetAreas.find(widgetArea => {
     const post = select('core').getEditedEntityRecord(KIND, POST_TYPE, buildWidgetAreaPostId(widgetArea.id));
-    const blockWidgetIds = post.blocks.map(block => Object(external_wp_widgets_["getWidgetIdFromBlock"])(block));
-    return blockWidgetIds.includes(widgetId);
+    if (post.blocks !== null && typeof post.blocks !== 'undefined') {
+        const blockWidgetIds = post.blocks.map(block => Object(external_wp_widgets_["getWidgetIdFromBlock"])(block));
+        return blockWidgetIds.includes(widgetId);
+    }
   });
 });
 /**

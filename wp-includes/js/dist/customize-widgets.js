@@ -2124,10 +2124,17 @@ class sidebar_adapter_SidebarAdapter {
   }
 
   _getWidgetIds() {
-    return this.setting.get();
+      let list = this.setting.get();
+
+      if (list == null || !Array.isArray(list)) {
+          list = [];
+      }
+
+      return list;
   }
 
-  _pushHistory() {
+
+    _pushHistory() {
     this.history = [...this.history.slice(0, this.historyIndex + 1), this._getWidgetIds().map(widgetId => this.getWidget(widgetId))];
     this.historyIndex += 1;
     this.historySubscribers.forEach(listener => listener());
